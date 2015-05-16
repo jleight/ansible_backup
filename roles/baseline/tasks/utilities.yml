@@ -1,0 +1,16 @@
+---
+- name: Set up utilities on ArchLinux
+  include: utilities_archlinux.yml
+  when: ansible_os_family == 'Archlinux'
+
+- name: Set up utilities on RedHat
+  include: utilities_redhat.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Set shell to zsh for all non-system users
+  user:
+    name: '{{ item.username }}'
+    shell: '/usr/bin/zsh'
+    state: present
+  when: item.system is not defined or not item.system
+  with_items: common_users

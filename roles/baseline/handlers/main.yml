@@ -1,0 +1,11 @@
+---
+- name: restart sshd
+  service:
+    name: sshd
+    state: restarted
+
+- name: restart server
+  command: shutdown -r now
+  async: 0
+  poll: 0
+  ignore_errors: yes

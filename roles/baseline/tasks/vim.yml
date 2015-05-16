@@ -1,0 +1,50 @@
+---
+- name: Copy vimrc for all non-system users
+  copy:
+    dest: '{{ item.home }}/.vimrc'
+    src: vimrc
+    owner: '{{ item.username }}'
+    group: '{{ item.username }}'
+    mode: 0644
+  when: item.system is not defined or not item.system
+  with_items: common_users
+
+- name: Make backup folders for vim
+  file:
+    path: '{{ item.home }}/.vim/backup'
+    owner: '{{ item.username }}'
+    group: '{{ item.username }}'
+    mode: 0755
+    state: directory
+  when: item.system is not defined or not item.system
+  with_items: common_users
+
+- name: Make plugin folders for vim
+  file:
+    path: '{{ item.home }}/.vim/plugin'
+    owner: '{{ item.username }}'
+    group: '{{ item.username }}'
+    mode: 0755
+    state: directory
+  when: item.system is not defined or not item.system
+  with_items: common_users
+
+- name: Make tmp folders for vim
+  file:
+    path: '{{ item.home }}/.vim/tmp'
+    owner: '{{ item.username }}'
+    group: '{{ item.username }}'
+    mode: 0755
+    state: directory
+  when: item.system is not defined or not item.system
+  with_items: common_users
+
+- name: Download vim sleuth plugin
+  get_url:
+    dest: '{{ item.home }}/.vim/plugin/sleuth.vim'
+    url: https://github.com/tpope/vim-sleuth/raw/master/plugin/sleuth.vim
+    owner: '{{ item.username }}'
+    group: '{{ item.username }}'
+    mode: 0644
+  when: item.system is not defined or not item.system
+  with_items: common_users

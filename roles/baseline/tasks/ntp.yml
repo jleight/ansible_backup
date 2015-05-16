@@ -1,0 +1,4 @@
+---
+- name: Set up ntp via systemd
+  include: ntp_systemd.yml
+  when: ansible_os_family == 'Archlinux'

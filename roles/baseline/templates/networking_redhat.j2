@@ -1,0 +1,17 @@
+DEVICE={{ item.adapter }}
+ONBOOT=yes
+{% if item.address is defined %}
+BOOTPROTO=none
+IPADDR={{ item.address }}
+PREFIX={{ item.netmask }}
+{% if item.gateway is defined %}
+GATEWAY={{ item.gateway }}
+{% endif %}
+{% if item.nameservers is defined %}
+{% for ns in item.nameservers %}
+DNS{{ loop.index + 1 }}={{ ns }}
+{% endfor %}
+{% endif %}
+{% else %}
+BOOTPROTO=dhcp
+{% endif %}

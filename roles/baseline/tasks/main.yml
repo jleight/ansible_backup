@@ -1,0 +1,28 @@
+---
+- name: Set up networking
+  include: networking.yml
+  when: common_networking is defined
+
+- name: Set up ntp
+  include: ntp.yml
+
+- name: Set up openssh for public key authentication
+  include: sshd.yml
+
+- name: Set up sudo for passwordless wheel access
+  include: sudo.yml
+
+- name: Set up users and groups
+  include: users.yml
+  when: common_users is defined or common_groups is defined
+
+- name: Install useful software
+  include: utilities.yml
+
+- name: Set up vim configuration
+  include: vim.yml
+  when: common_users is defined
+
+- name: Set up tmux configuration
+  include: tmux.yml
+  when: common_users is defined

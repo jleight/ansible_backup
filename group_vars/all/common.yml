@@ -1,0 +1,27 @@
+---
+common_groups:
+  - name: root
+    system: yes
+  - name: wheel
+    system: yes
+  - name: jleight
+
+common_users:
+  - username: root
+    password: '{{ personal_root_password }}'
+    group: root
+    groups:
+      - wheel
+    home: /root
+  - username: confman
+    password: '{{ personal_confman_password }}'
+    system: yes
+    group: wheel
+    pubkey: yes
+  - username: jleight
+    password: '{{ personal_jleight_password }}'
+    group: jleight
+    groups:
+      - wheel
+    home: /home/jleight
+    pubkey: yes

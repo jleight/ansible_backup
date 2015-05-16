@@ -1,0 +1,37 @@
+---
+- name: Create groups
+  group:
+    name: '{{ item.name }}'
+    system: '{{ (item.system is defined and item.system) | bool }}'
+    state: present
+  when: common_groups is defined
+  with_items: common_groups
+
+- name: Create users without ancillary groups
+  user:
+    name: '{{ item.username }}'
+    password: '{{ item.password }}'
+    group: '{{ item.group }}'
+    system: '{{ (item.system is defined and item.system) | bool }}'
+    state: present
+  when: common_users is defined and item.groups is not defined
+  with_items: common_users
+
+- name: Create users with ancillary groups
+  user:
+    name: '{{ item.username }}'
+    password: '{{ item.password }}'
+    group: '{{ item.group }}'
+    groups: '{{ item.groups | join(",") }}'
+    append: yes
+    system: '{{ (item.system is defined and item.system) | bool }}'
+    state: present
+  when: common_users is defined and item.groups is defined
+  with_items: common_users
+
+- name: Set authorized_keys for users with public keys
+  authorized_key:
+    user: '{{ item.username }}'
+    key: '{{ lookup("file", "public_keys/" + item.username + ".pub") }}'
+  when: common_users is defined and item.pubkey is defined and item.pubkey
+  with_items: common_users

@@ -1,0 +1,41 @@
+---
+- name: Set up EPEL
+  yum:
+    name: epel-release
+    state: present
+  register: result
+
+- name: Refresh yum cache
+  yum:
+    name: epel-release
+    update_cache: yes
+    state: present
+  when: result | changed
+
+- name: Install packages with yum
+  yum:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - zsh
+    - vim-enhanced
+    - htop
+    - tmux
+
+- name: Install grml zsh configuration
+  get_url:
+    dest: /etc/zshrc
+    url: http://git.grml.org/f/grml-etc-core/etc/zsh/zshrc
+    owner: root
+    group: root
+    mode: 0644
+    force: yes
+
+- name: Install grml zsh skeleton
+  get_url:
+    dest: /etc/skel/.zshrc
+    url: http://git.grml.org/f/grml-etc-core/etc/skel/.zshrc
+    owner: root
+    group: root
+    mode: 0644
+    force: yes

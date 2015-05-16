@@ -1,0 +1,13 @@
+---
+ansible_connection: local
+
+common_networking:
+  hostname: '{{ inventory_hostname }}.jleight.com'
+  adapters:
+    - adapter: eno16777984
+      address: 192.168.1.252
+      netmask: 24
+      gateway: 192.168.1.1
+      nameservers:
+        - 8.8.8.8
+        - 8.8.4.4

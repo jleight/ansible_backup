@@ -1,0 +1,11 @@
+---
+- name: Write network configuration files on RedHat
+  template:
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ item.adapter }}
+    src: networking_redhat.j2
+    owner: root
+    group: root
+    mode: 0644
+  when: common_networking.adapters is defined
+  with_items: common_networking.adapters
+  notify: restart server

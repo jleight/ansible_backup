@@ -1,0 +1,19 @@
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AuthorizedKeysFile .ssh/authorized_keys
+ChallengeResponseAuthentication no
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /etc/ssh/ssh_host_rsa_key
+PasswordAuthentication no
+PermitEmptyPasswords no
+PermitRootLogin no
+{% if ansible_os_family == 'Archlinux' %}
+Subsystem sftp /usr/lib/ssh/sftp-server
+{% elif ansible_os_family == 'RedHat' %}
+Subsystem sftp /usr/libexec/openssh/sftp-server
+{% endif %}
+SyslogFacility AUTHPRIV
+UsePAM no
+UsePrivilegeSeparation sandbox

@@ -1,0 +1,30 @@
+---
+- name: Start and enable systemd-networkd
+  service:
+    name: systemd-networkd
+    enabled: yes
+    state: started
+
+- name: Start and enable systemd-resolved
+  service:
+    name: systemd-resolved
+    enabled: yes
+    state: started
+
+- name: Write configuration files
+  template:
+    dest: /etc/systemd/network/{{ item.adapter }}.network
+    src: networking_systemd.j2
+    owner: root
+    group: root
+    mode: 0644
+  when: common_networking.adapters is defined
+  with_items: common_networking.adapters
+  notify: restart server
+
+- name: Symlink resolv.conf file
+  file:
+    dest: /etc/resolv.conf
+    src: /run/systemd/resolve/resolv.conf
+    force: yes
+    state: link

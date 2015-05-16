@@ -1,0 +1,10 @@
+---
+- name: Copy tmux configuration for all non-system users
+  copy:
+    dest: '{{ item.home }}/.tmux.conf'
+    src: tmux.conf
+    owner: '{{ item.username }}'
+    group: '{{ item.username }}'
+    mode: 0644
+  when: item.system is not defined or not item.system
+  with_items: common_users

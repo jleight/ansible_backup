@@ -1,0 +1,21 @@
+[Match]
+Name={{ item.adapter }}
+
+[Network]
+{% if item.address is not defined %}
+DHCP=v4
+{% else %}
+{% if item.nameservers is defined %}
+{% for ns in item.nameservers %}
+DNS={{ ns }}
+{% endfor %}
+{% endif %}
+
+[Address]
+Address={{ item.address }}/{{ item.netmask }}
+
+{% if item.gateway is defined %}
+[Route]
+Gateway={{ item.gateway }}
+{% endif %}
+{% endif %}

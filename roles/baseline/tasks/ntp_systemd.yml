@@ -1,0 +1,30 @@
+---
+- name: Configure systemd-timesyncd
+  copy:
+    dest: /etc/systemd/timesyncd.conf
+    src: timesyncd.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Make folder to extend systemd-timesyncd configuration
+  file:
+    path: /etc/systemd/system/systemd-timesyncd.service.d
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: Disable virtualization check for systemd-timesyncd
+  copy:
+    dest: /etc/systemd/system/systemd-timesyncd.service.d/allow_virt.conf
+    src: timesyncd_allow_virt.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Start and enable up systemd-timesyncd
+  service:
+    name: systemd-timesyncd
+    enabled: yes
+    state: started

@@ -1,0 +1,13 @@
+---
+- name: Set the hostname of the server
+  hostname:
+    name: '{{ common_networking.hostname | default(inventory_hostname) }}'
+  when: ansible_os_family != 'Archlinux'
+
+- name: Set up networking with systemd
+  include: networking_systemd.yml
+  when: ansible_os_family == 'Archlinux'
+
+- name: Set up networking on RedHat
+  include: networking_redhat.yml
+  when: ansible_os_family == 'RedHat'

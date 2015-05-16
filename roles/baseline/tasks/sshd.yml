@@ -1,0 +1,24 @@
+---
+- name: Install openssh on ArchLinux
+  pacman:
+    name: openssh
+    state: present
+  when: ansible_os_family == 'Archlinux'
+
+- name: Install openssh on RedHat
+  yum:
+    name: openssh-server
+    state: present
+  when: ansible_os_family == 'RedHat'
+
+- name: Start and enable sshd
+  service:
+    name: sshd
+    enabled: yes
+    state: started
+
+- name: Harden sshd configuration
+  template:
+    dest: /etc/ssh/sshd_config
+    src: sshd_config.j2
+  notify: restart sshd
