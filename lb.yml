@@ -1,0 +1,7 @@
+---
+- hosts: lb
+  remote_user: confman
+  sudo: yes
+  roles:
+    - baseline
+    - firewall

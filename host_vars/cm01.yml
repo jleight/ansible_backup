@@ -1,5 +1,5 @@
 ---
-ansible_connection: local
+ansible_ssh_host: 192.168.1.252
 
 common_networking:
   hostname: '{{ inventory_hostname }}.jleight.com'
@@ -11,3 +11,9 @@ common_networking:
       nameservers:
         - 8.8.8.8
         - 8.8.4.4
+
+firewall_config:
+  loopback_adapters:
+    - lo
+  open_tcp:
+    - port: 22

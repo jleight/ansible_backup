@@ -1,0 +1,20 @@
+---
+- name: Prepare RedHat for iptables configuration
+  include: redhat.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Start and enable iptables service
+  service:
+    name: iptables
+    enabled: yes
+    state: started
+
+- name: Generate iptables configuration
+  template:
+    dest: /etc/iptables/iptables.rules
+    src: iptables.rules.j2
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart iptables
+  when: firewall_config is defined

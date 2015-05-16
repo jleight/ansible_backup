@@ -1,0 +1,26 @@
+---
+- name: Install iptables-services package
+  yum:
+    name: iptables-services
+    state: present
+
+- name: Create iptables configuration directory
+  file:
+    path: /etc/iptables
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: Create a symlink for iptables configuration
+  file:
+    dest: /etc/sysconfig/iptables
+    src: /etc/iptables/iptables.rules
+    force: yes
+    state: link
+
+- name: Stop and disble firewalld
+  service:
+    name: firewalld
+    enabled: no
+    state: stopped
