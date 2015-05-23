@@ -1,7 +1,7 @@
 ---
 - name: Set the hostname of the server
   hostname:
-    name: '{{ common_networking.hostname | default(inventory_hostname) }}'
+    name: '{{ baseline_networking.hostname|default(inventory_hostname) }}'
   when: ansible_os_family != 'Archlinux'
 
 - name: Set up networking with systemd

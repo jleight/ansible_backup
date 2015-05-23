@@ -10,7 +10,7 @@
     name: epel-release
     update_cache: yes
     state: present
-  when: result | changed
+  when: result|changed
 
 - name: Install packages with yum
   yum:

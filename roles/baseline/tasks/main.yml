@@ -1,7 +1,7 @@
 ---
 - name: Set up networking
   include: networking.yml
-  when: common_networking is defined
+  when: baseline_networking is defined
 
 - name: Set up ntp
   include: ntp.yml
@@ -14,15 +14,15 @@
 
 - name: Set up users and groups
   include: users.yml
-  when: common_users is defined or common_groups is defined
+  when: baseline_users is defined or baseline_groups is defined
 
 - name: Install useful software
   include: utilities.yml
 
 - name: Set up vim configuration
   include: vim.yml
-  when: common_users is defined
+  when: baseline_users is defined
 
 - name: Set up tmux configuration
   include: tmux.yml
-  when: common_users is defined
+  when: baseline_users is defined

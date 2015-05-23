@@ -13,4 +13,4 @@
     shell: '/usr/bin/zsh'
     state: present
   when: item.system is not defined or not item.system
-  with_items: common_users
+  with_items: baseline_users

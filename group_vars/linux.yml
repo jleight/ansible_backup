@@ -1,0 +1,28 @@
+---
+baseline_groups:
+  - name: root
+    system: yes
+  - name: wheel
+    system: yes
+  - name: '{{ admin_user }}'
+
+baseline_users:
+  - username: root
+    password: 'x'
+    group: root
+    groups:
+      - wheel
+    home: /root
+  - username: confman
+    password: 'x'
+    system: yes
+    group: wheel
+    pubkey: yes
+    pubkey_options: 'from="{{ confman_host }}"'
+  - username: '{{ admin_user }}'
+    password: '{{ admin_pass_hash }}'
+    group: '{{ admin_user }}'
+    groups:
+      - wheel
+    home: '/home/{{ admin_user }}'
+    pubkey: yes

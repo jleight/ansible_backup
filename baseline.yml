@@ -1,5 +1,12 @@
 ---
-- hosts: all
+- hosts: '{{ target }}'
   remote_user: root
+  vars_prompt:
+    - name: target
+      prompt: 'remote host'
+      private: no
+    - name: ansible_ssh_pass
+      prompt: 'remote password'
+      private: yes
   roles:
     - baseline

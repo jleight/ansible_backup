@@ -18,8 +18,8 @@
     owner: root
     group: root
     mode: 0644
-  when: common_networking.adapters is defined
-  with_items: common_networking.adapters
+  when: baseline_networking.adapters is defined
+  with_items: baseline_networking.adapters
   notify: restart server
 
 - name: Symlink resolv.conf file
