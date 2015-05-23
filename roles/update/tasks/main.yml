@@ -1,0 +1,8 @@
+---
+- name: Update packages with pacman
+  include: update_pacman.yml
+  when: ansible_os_family == 'Archlinux'
+
+- name: Update packages with yum
+  include: update_yum.yml
+  when: ansible_os_family == 'RedHat'
