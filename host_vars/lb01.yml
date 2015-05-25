@@ -32,12 +32,6 @@ haproxy_frontends:
       uri: /haproxy?stats
       refresh: 30s
     backend: nginx
-haproxy_backends:
-  - name: nginx
-    servers:
-      - name: dkr_nginx
-        address: '{{ default_docker_host }}'
-        port: 80
   - name: http-internal
     binds:
       - address: 192.168.1.251
