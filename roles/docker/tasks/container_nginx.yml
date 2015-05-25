@@ -13,8 +13,8 @@
 
 - name: Copy homepage file to data directory
   copy:
-    src: nginx/index.html
-    dest: '{{ docker_volumes_path }}/nginx/html/index.html'
+    src: 'nginx/{{ item }}'
+    dest: '{{ docker_volumes_path }}/nginx/html/{{ item }}'
     force: yes
     owner: '{{ docker_volumes_user }}'
     group: '{{ docker_volumes_user }}'
@@ -23,6 +23,9 @@
     serole: object_r
     setype: svirt_sandbox_file_t
     selevel: s0
+  with_items:
+    - index.html
+    - keybase.txt
 
 - name: Set up an nginx container
   docker:

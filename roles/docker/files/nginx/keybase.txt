@@ -1,0 +1,73 @@
+==================================================================
+https://keybase.io/jleight
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://jleight.com
+  * I am jleight (https://keybase.io/jleight) on keybase.
+  * I have a public key with fingerprint 9019 FA1E E7E6 1707 6400  C114 A6A0 AFD8 3CB5 9C02
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "9019fa1ee7e617076400c114a6a0afd83cb59c02",
+            "host": "keybase.io",
+            "key_id": "a6a0afd83cb59c02",
+            "kid": "0101e71370f4c570b9c36ac2352ddfeca843d299043acf3932081f485970656b3f150a",
+            "uid": "a22ddfddac3929b010ebe56601e86c00",
+            "username": "jleight"
+        },
+        "revoke": {
+            "sig_ids": [
+                "9686f5b1e2665b818690ae52bd67b75db549ac3c467d4fe683cb59c58c2931040f"
+            ]
+        },
+        "service": {
+            "hostname": "jleight.com",
+            "protocol": "https:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1432565883,
+    "expire_in": 157680000,
+    "prev": "d3f39a495969a1b820338acfc0d09473eefedc348a88e04d5f03769314381c8c",
+    "seqno": 24,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.8
+Comment: https://keybase.io/crypto
+
+yMJgAnicbZJbaBVHGMdPvBuvQbQiijI9GE2CzuxcduaAYrC2tEjQSESNEmdnZ0/W
+mLPHPXviJYo+KWpJwWpbMWCLEbwFUSOCYFATWlEfSjWiD4oKUdQ2YFOrIAnORn0Q
+nJdlZv7f7/99/53OMYMThQXnR09HLxPVZwtuXGnOJ6oUb2wETuBuBqlGUKcHPp6f
+SeswG/qZCKSAgEh4Emlta4ZsaDMCoUKISCah9FyOlUOFghYoA7VBLq4wGEfm9Bw/
+MGdmU+O75vQz+rqBC4gg0jbCNvSIojZ0hMJMKgtTy3U9rSQn2LWEgARL5WGBLciR
+RzgVNmSUOdhDFEqDy7/3seIy15UKC0s4hq4dTRkzJpwpCGNhTocZWa+Net167adr
+I7CtDIS6IajTcQA5P216zoFUNRCMM486SFuMUYcjzgSUmlqOy2zHpq5DiTBOijDb
+JZ5mH8ajXFkCI0igB9YYtjFs8NUAPA7pU/M5Kqg3XWXDIApUsN5c1EZRNpeKm4o2
+Z2PlRu3UfGDUOH7GNX/IVDToMOcHGZBCRqkiP4Yigi3KKOe4DOhNWT/UNX6soDbj
+0KzYRzcYpItNlpIIKpiQyOEWxJibgBV0oSA21trTrsKES841JC71ILaZGYpgjhRX
+IJ5qQyYAKYuYPmXaME1wGRnlQw22Xb28ekiioDAxbOig+JElCkeO//j0Zp8b3j+3
+ZP4/I/S+yd2ldjC3b0+yrag7Wdl+9FblvoO/l+9EHU0nipu7El1bO2/Dzv5k/lpb
+Zd+b0tJvW8C44qk93au/W7G0p8LPVLyYvHDKj09qF3c8Hrfqy70VX/21//mIjpZs
+XdGpX5ZN2zLsQbpxwpFH7ceeLW7u2XL+j9dReLi/fuL+Wb0///bg19PJ6qbSVUt2
+v/rvz282tg460n0xf6CIzFgu28SY3kOXf1p0v+Tpv9OXr1y5/WZxsun7+YMP9E6t
+urtjwYVNXRcnrX1ZMO1kG386897DgzPO9t1pvTKvZNarS4tGjq36u+L6uZajyV2j
+jp8pb/mhPcwvmfT/reK7YG/5F19vWLvzbTm/2Xr/HbfFP+4=
+=Mtdk
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/jleight
+
+==================================================================
