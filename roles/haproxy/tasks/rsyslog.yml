@@ -1,0 +1,29 @@
+---
+- name: Enable rsyslog UDP module
+  lineinfile:
+    dest: /etc/rsyslog.conf
+    regexp: ^#(\$ModLoad imudp)$
+    backrefs: yes
+    line: \1
+  notify: restart rsyslog
+
+- name: Set rsyslog UDP port
+  lineinfile:
+    dest: /etc/rsyslog.conf
+    regexp: ^#(\$UDPServerRun 514)$
+    backrefs: yes
+    line: \1
+  notify: restart rsyslog
+
+- name: Set rsyslog UDP listen address
+  lineinfile:
+    dest: /etc/rsyslog.conf
+    insertafter: ^\$ModLoad imudp$
+    line: $UDPServerAddress 127.0.0.1
+  notify: restart rsyslog
+
+- name: Configure haproxy rsyslog logging
+  template:
+    dest: /etc/rsyslog.d/haproxy.conf
+    src: rsyslog-haproxy.conf.j2
+  notify: restart rsyslog

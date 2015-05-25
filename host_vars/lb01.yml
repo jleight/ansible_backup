@@ -1,5 +1,6 @@
 ---
 ansible_ssh_host: 192.168.1.251
+default_docker_host: 192.168.1.250
 
 baseline_networking:
   hostname: '{{ inventory_hostname }}.jleight.com'
@@ -15,3 +16,56 @@ baseline_networking:
 firewall_config:
   open_tcp:
     - port: 22
+    - port: 80
+    - port: 8080
+
+haproxy_stats_userlist:
+  - name: '{{ admin_user }}'
+    pass: '{{ admin_pass_hash }}'
+    group: admins
+haproxy_frontends:
+  - name: http-external
+    binds:
+      - address: 192.168.1.251
+        port: 8080
+    stats:
+      uri: /haproxy?stats
+      refresh: 30s
+    backend: nginx
+haproxy_backends:
+  - name: nginx
+    servers:
+      - name: dkr_nginx
+        address: '{{ default_docker_host }}'
+        port: 80
+  - name: http-internal
+    binds:
+      - address: 192.168.1.251
+        port: 80
+    stats:
+      uri: /haproxy?stats
+      refresh: 30s
+    acls:
+      - name: sabnzbd
+        path: /sabnzbd
+        backend: sabnzbd
+      - name: sickbeard
+        path: /sickbeard
+        backend: sickbeard
+    backend: nginx
+haproxy_backends:
+  - name: nginx
+    servers:
+      - name: dkr_nginx
+        address: '{{ default_docker_host }}'
+        port: 80
+  - name: sabnzbd
+    servers:
+      - name: dkr_sabnzbd
+        address: '{{ default_docker_host }}'
+        port: 8080
+  - name: sickbeard
+    servers:
+      - name: dkr_sickbeard
+        address: '{{ default_docker_host }}'
+        port: 8081

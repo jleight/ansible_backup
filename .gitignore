@@ -1,1 +1,2 @@
 group_vars/all/personal.yml
+*.pyc

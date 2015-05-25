@@ -1,0 +1,33 @@
+---
+- name: Configure rsyslog for udp
+  include: rsyslog.yml
+
+- name: Install haproxy
+  yum:
+    name: haproxy
+    state: present
+
+- name: Enable and start haproxy
+  service:
+    name: haproxy
+    enabled: yes
+    state: started
+
+- name: Configure haproxy
+  template:
+    dest: /etc/haproxy/haproxy.cfg
+    src: haproxy.cfg.j2
+  notify: reload haproxy
+
+- name: Install libsemanage-python to unrestrict haproxy
+  yum:
+    name: libsemanage-python
+    state: present
+  when: haproxy_backends|has_restricted_port
+
+- name: Unrestrict haproxy port bindings
+  seboolean:
+    name: haproxy_connect_any
+    state: yes
+    persistent: yes
+  when: haproxy_backends|has_restricted_port
