@@ -1,0 +1,28 @@
+---
+- name: Create volumes for sabnzbd
+  file:
+    path: '{{ docker_volumes_path }}/sabnzbd/{{ item }}'
+    owner: '{{ docker_volumes_user }}'
+    group: '{{ docker_volumes_user }}'
+    mode: 0755
+    seuser: system_u
+    serole: object_r
+    setype: svirt_sandbox_file_t
+    selevel: s0
+    state: directory
+  with_items:
+    - config
+    - downloads
+
+- name: Set up a sabnzbd container
+  docker:
+    image: jleight/sabnzbd:0.7.20
+    name: sabnzbd
+    state: running
+    restart_policy: always
+    memory_limit: 0
+    ports:
+      - 8080:8080
+    volumes:
+      - '{{ docker_volumes_path }}/sabnzbd/config:/etc/opt/sabnzbd'
+      - '{{ docker_volumes_path }}/sabnzbd/downloads:/var/opt/sabnzbd'

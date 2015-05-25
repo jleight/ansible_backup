@@ -1,0 +1,16 @@
+---
+- name: Set up a group for docker containers to run as
+  group:
+    name: '{{ docker_volumes_user }}'
+    gid: 300
+    system: yes
+    state: present
+
+- name: Set up a user for docker containers to run as
+  user:
+    name: '{{ docker_volumes_user }}'
+    uid: 300
+    comment: Docker Application User
+    group: '{{ docker_volumes_user }}'
+    system: yes
+    state: present

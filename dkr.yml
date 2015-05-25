@@ -1,0 +1,8 @@
+---
+- hosts: dkr
+  remote_user: confman
+  sudo: yes
+  roles:
+    - baseline
+    - firewall
+    - docker

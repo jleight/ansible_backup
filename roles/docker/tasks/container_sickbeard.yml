@@ -1,0 +1,30 @@
+---
+- name: Create volumes for sickbeard
+  file:
+    path: '{{ docker_volumes_path }}/sickbeard/{{ item }}'
+    owner: '{{ docker_volumes_user }}'
+    group: '{{ docker_volumes_user }}'
+    mode: 0755
+    seuser: system_u
+    serole: object_r
+    setype: svirt_sandbox_file_t
+    selevel: s0
+    state: directory
+  with_items:
+    - config
+    - data
+
+- name: Set up a sickbeard container
+  docker:
+    image: jleight/sickbeard:latest
+    name: sickbeard
+    state: running
+    restart_policy: always
+    memory_limit: 0
+    ports:
+      - 8081:8081
+    env:
+      SICKBEARD_WEBROOT: /sickbeard
+    volumes:
+      - '{{ docker_volumes_path }}/sickbeard/config:/etc/opt/sickbeard'
+      - '{{ docker_volumes_path }}/sickbeard/data:/var/opt/sickbeard'

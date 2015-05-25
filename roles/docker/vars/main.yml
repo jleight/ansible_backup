@@ -1,0 +1,3 @@
+---
+docker_volumes_user: dkrapp
+docker_volumes_path: /mnt/docker

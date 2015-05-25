@@ -1,0 +1,26 @@
+---
+- name: Create volumes for sonarr
+  file:
+    path: '{{ docker_volumes_path }}/sonarr/data'
+    owner: '{{ docker_volumes_user }}'
+    group: '{{ docker_volumes_user }}'
+    mode: 0755
+    seuser: system_u
+    serole: object_r
+    setype: svirt_sandbox_file_t
+    selevel: s0
+    state: directory
+
+- name: Set up a sonarr container
+  docker:
+    image: jleight/sonarr:latest
+    name: sonarr
+    state: running
+    restart_policy: always
+    memory_limit: 0
+    ports:
+      - 8989:8989
+    env:
+      SONARR_URLBASE: /sonarr
+    volumes:
+      - '{{ docker_volumes_path }}/sonarr/data:/var/opt/sonarr'

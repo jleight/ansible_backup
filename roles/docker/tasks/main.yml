@@ -1,0 +1,25 @@
+---
+- name: Install and configure docker
+  include: install.yml
+
+- name: Set up a user for containers to use
+  include: user.yml
+
+- name: Set up a directory for volumes to be mounted in
+  include: volumes.yml
+
+- name: Set up nginx container
+  include: container_nginx.yml
+  when: "'nginx' in docker_run"
+
+- name: Set up sabnzbd container
+  include: container_sabnzbd.yml
+  when: "'sabnzbd' in docker_run"
+
+- name: Set up sonarr container
+  include: container_sonarr.yml
+  when: "'sonarr' in docker_run"
+
+- name: Set up sickbeard container
+  include: container_sickbeard.yml
+  when: "'sickbeard' in docker_run"

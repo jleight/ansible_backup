@@ -1,0 +1,60 @@
+---
+- name: Create directory for container volumes
+  file:
+    path: '{{ docker_volumes_path }}'
+    owner: '{{ docker_volumes_user }}'
+    group: '{{ docker_volumes_user }}'
+    mode: 0755
+    seuser: system_u
+    serole: object_r
+    setype: svirt_sandbox_file_t
+    selevel: s0
+    state: directory
+
+- name: Set up NFS client libraries on RedHat
+  yum:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - nfs-utils
+    - nfs-utils-lib
+  when: docker_volumes_nfs is defined and ansible_os_family == 'RedHat'
+
+- name: Enable and start services for NFS on RedHat
+  service:
+    name: '{{ item }}'
+    enabled: yes
+    state: started
+  with_items:
+    - rpcbind
+    - nfs
+    - rpc-statd
+  when: docker_volumes_nfs is defined and ansible_os_family == 'RedHat'
+
+- name: Set up NFS mount for container volumes
+  mount:
+    name: '{{ docker_volumes_path }}'
+    src: '{{ docker_volumes_nfs }}'
+    fstype: nfs
+    opts: 'defaults,context="system_u:object_r:svirt_sandbox_file_t:s0"'
+    state: mounted
+  when: docker_volumes_nfs is defined
+
+- name: Create directory for systemd configuration
+  file:
+    path: /etc/systemd/system/docker.service.d
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+  when: docker_volumes_nfs is defined
+
+- name: Ensure nfs is ready before starting docker service
+  copy:
+    src: remote-fs.conf
+    dest: /etc/systemd/system/docker.service.d/remote-fs.conf
+    force: yes
+    owner: root
+    group: root
+    mode: 0644
+  when: docker_volumes_nfs is defined

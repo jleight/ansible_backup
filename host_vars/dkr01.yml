@@ -11,3 +11,12 @@ baseline_networking:
       nameservers:
         - 8.8.8.8
         - 8.8.4.4
+
+firewall_config:
+  open_tcp:
+    - port: 22
+
+docker_run:
+  - nginx
+  - sabnzbd
+  - sickbeard

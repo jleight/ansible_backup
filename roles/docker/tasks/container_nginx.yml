@@ -1,0 +1,37 @@
+---
+- name: Create directory for nginx content
+  file:
+    path: '{{ docker_volumes_path }}/nginx/html'
+    owner: '{{ docker_volumes_user }}'
+    group: '{{ docker_volumes_user }}'
+    mode: 0755
+    seuser: system_u
+    serole: object_r
+    setype: svirt_sandbox_file_t
+    selevel: s0
+    state: directory
+
+- name: Copy homepage file to data directory
+  copy:
+    src: nginx/index.html
+    dest: '{{ docker_volumes_path }}/nginx/html/index.html'
+    force: yes
+    owner: '{{ docker_volumes_user }}'
+    group: '{{ docker_volumes_user }}'
+    mode: 0644
+    seuser: system_u
+    serole: object_r
+    setype: svirt_sandbox_file_t
+    selevel: s0
+
+- name: Set up an nginx container
+  docker:
+    image: jleight/nginx:1.7.10
+    name: nginx
+    state: running
+    restart_policy: always
+    memory_limit: 0
+    ports:
+      - 80:80
+    volumes:
+      - '{{ docker_volumes_path }}/nginx/html:/usr/share/nginx/html'
