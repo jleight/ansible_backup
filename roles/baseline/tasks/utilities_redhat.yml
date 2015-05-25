@@ -21,6 +21,7 @@
     - vim-enhanced
     - htop
     - tmux
+    - python-pip
 
 - name: Install grml zsh configuration
   get_url:
